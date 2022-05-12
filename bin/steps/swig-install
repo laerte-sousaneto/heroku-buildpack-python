@@ -1,0 +1,24 @@
+if [ ! -d $CACHE_DIR/swig ]; then
+  echo "Fetching SWIG" | indent
+  curl -O https://bento-libraries.s3.us-east-2.amazonaws.com/swig.tar.gz >/dev/null 2>&1
+
+  echo "Installing SWIG 2..." | indent
+  tar xzvf swig.tar.gz >/dev/null 2>&1
+  mv swig $CACHE_DIR/swig
+  rm swig.tar.gz
+  echo "SWIG installed" | indent
+fi
+
+mkdir -p .bentobox
+cp -R $CACHE_DIR/swig .bentobox
+
+echo "Updating path with SWIG..." | indent
+export PATH=$PATH:$BUILD_DIR/.bentobox/swig/bin/
+
+echo "Setting SWIG_LIB environment var..."
+export SWIG_LIB=$BUILD_DIR/.bentobox/swig/share/swig/2.0.5/
+
+echo "Verifying SWIG installation..." | indent
+swig -version
+
+echo "SWIG setup completed." | indent

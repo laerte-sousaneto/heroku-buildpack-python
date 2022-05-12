@@ -250,6 +250,10 @@ mtime "python.install.time" "${start}"
 # shellcheck source=bin/steps/pipenv
 source "$BIN_DIR/steps/pipenv"
 
+# Install SWIG
+source "$BIN_DIR/steps/swig-install"
+
+
 # If no requirements.txt file given, assume `setup.py develop` is intended.
 # This allows for people to ship a setup.py application to Heroku
 
@@ -308,6 +312,7 @@ mtime "collectstatic.time" "${start}"
 
 # Set the PATH to include Python / pip / pipenv / etc.
 set_env PATH "\$HOME/.heroku/python/bin:\$PATH"
+#set_env PATH "\$HOME/.heroku/python/bin:\$HOME/.paybox/swig/bin:\$PATH"
 # Tell Python to run in unbuffered mode.
 set_env PYTHONUNBUFFERED true
 # Tell Python where it lives.
